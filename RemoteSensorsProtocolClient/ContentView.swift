@@ -19,8 +19,7 @@ struct ContentView: View {
     @AppStorage("numberName") private var numberName = "number"
     @AppStorage("numberValue") private var numberValue = "123"
     
-    
-    @State private var isConnected = false
+    @StateObject private var client = Client()
     
     var body: some View {
         Form {
@@ -28,23 +27,23 @@ struct ContentView: View {
                 HStack {
                     TextField("localhost", text: $host)
                         .border(Color.gray, width: 1)
-                        .disabled(isConnected)
+                        .disabled(client.isConnected)
                     Text(": 42001")
                 }
                 HStack {
-                    if isConnected {
+                    if client.isConnected {
                         Text("Connected")
                     } else {
                         Text("Not connected")
                     }
                     Spacer()
-                    if isConnected {
+                    if client.isConnected {
                         Button("Disconnect") {
-                            isConnected = false
+                            client.disconnect()
                         }
                     } else {
                         Button("Connect") {
-                            isConnected = true
+                            client.connect(host: host)
                         }
                     }
                 }
@@ -55,7 +54,7 @@ struct ContentView: View {
                     TextField("Message String", text: $broadcast)
                         .border(Color.gray, width: 1)
                     Button("Send") {
-                        print("broadcast \"\(broadcast)\"")
+                        client.send("broadcast \"\(broadcast)\"")
                     }
                 }
             }
@@ -67,7 +66,7 @@ struct ContentView: View {
                     TextField("ABC", text: $stringValue)
                         .border(Color.gray, width: 1)
                     Button("Send") {
-                        print("sensor-update \"\(stringName)\" \"\(stringValue)\"")
+                        client.send("sensor-update \"\(stringName)\" \"\(stringValue)\"")
                     }
                 }
             }
@@ -81,7 +80,7 @@ struct ContentView: View {
                         .keyboardType(.numberPad)
                     Button("Send") {
                         if let value = Int(numberValue) {
-                            print("sensor-update \"\(numberName)\" \(value)")
+                            client.send("sensor-update \"\(numberName)\" \(value)")
                         } else {
                             print("\"\(numberValue)\" is not a number")
                         }

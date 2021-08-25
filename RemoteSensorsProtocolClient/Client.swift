@@ -83,13 +83,13 @@ class Client: ObservableObject {
                 return
             }
             
-            guard let data = data, data.count == length, let s = String(data: data, encoding: .utf8) else {
+            guard let data = data, data.count == length, let body = String(data: data, encoding: .utf8) else {
                 print("Receive Error: data is invalid")
                 self?.disconnect()
                 return
             }
             
-            print("Received: '\(s)'")
+            print("Received: '\(body)'")
             self?.receiveHeader()
         })
     }
@@ -100,7 +100,7 @@ class Client: ObservableObject {
     
     func send(_ s: String) {
         guard isConnected else { return }
-        guard let body = s.data(using: .utf8) else { return }
+        guard let body = s.data(using: .utf8), body.count <= UInt32.max else { return }
         let length = UInt32(body.count)
         var data = withUnsafeBytes(of: length.bigEndian) { Data($0) }
         data.append(body)

@@ -26,7 +26,7 @@ class Client: ObservableObject {
             switch newState {
             case .ready:
                 print(".ready")
-                self?.receive()
+                self?.receiveHeader()
             case .waiting(let error):
                 print(".waiting", error)
             case .failed(let error):
@@ -51,23 +51,46 @@ class Client: ObservableObject {
         connection?.cancel()
     }
     
-    private func receive() {
-        connection?.receive(minimumIncompleteLength: 0, maximumLength: 1000, completion: { [weak self] data, context, completed, error in
+    private func receiveHeader() {
+        connection?.receive(minimumIncompleteLength: 4, maximumLength: 4, completion: { [weak self] data, context, completed, error in
             if let error = error {
                 print("Receive Error: \(error)")
                 self?.disconnect()
                 return
             }
             
-            if let data = data, data.count >= 4 {
-                let len = Int(data[3]) // TODO: Use all 4 bytes
-                let body = data.dropFirst(4).prefix(len)
-                if let s = String(data: body, encoding: .utf8) {
-                    print("Received: [\(len)] '\(s)'")
-                }
+            guard let data = data, data.count == 4 else {
+                print("Receive Error: data is invalid")
+                self?.disconnect()
+                return
             }
             
-            self?.receive()
+            let length = UInt32(bigEndian: data.withUnsafeBytes { $0.load(as: UInt32.self) })
+            self?.receiveBody(length: Int(length))
+        })
+    }
+    
+    private func receiveBody(length: Int) {
+        guard length > 0 else {
+            receiveHeader()
+            return
+        }
+        
+        connection?.receive(minimumIncompleteLength: length, maximumLength: length, completion: { [weak self] data, context, completed, error in
+            if let error = error {
+                print("Receive Error: \(error)")
+                self?.disconnect()
+                return
+            }
+            
+            guard let data = data, data.count == length, let s = String(data: data, encoding: .utf8) else {
+                print("Receive Error: data is invalid")
+                self?.disconnect()
+                return
+            }
+            
+            print("Received: '\(s)'")
+            self?.receiveHeader()
         })
     }
     

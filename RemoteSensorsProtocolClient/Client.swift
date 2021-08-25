@@ -98,9 +98,10 @@ class Client: ObservableObject {
         send(message.stringData)
     }
     
-    func send(_ s: String) {
+    func send(_ string: String) {
         guard isConnected else { return }
-        guard let body = s.data(using: .utf8), body.count <= UInt32.max else { return }
+        guard let body = string.data(using: .utf8), body.count <= UInt32.max else { return }
+        
         let length = UInt32(body.count)
         var data = withUnsafeBytes(of: length.bigEndian) { Data($0) }
         data.append(body)
@@ -110,7 +111,7 @@ class Client: ObservableObject {
                 print("Send Error: \(error)")
                 return
             }
-            print("Sent: '\(s)'")
+            print("Sent: '\(string)'")
         }))
     }
 }

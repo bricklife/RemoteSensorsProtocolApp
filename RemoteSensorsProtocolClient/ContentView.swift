@@ -19,6 +19,8 @@ struct ContentView: View {
     @AppStorage("numberName") private var numberName = "number"
     @AppStorage("numberValue") private var numberValue = "123"
     
+    @AppStorage("message") private var message = "send-vars"
+    
     @StateObject private var client = Client()
     
     var body: some View {
@@ -84,6 +86,16 @@ struct ContentView: View {
                         } else {
                             print("\"\(numberValue)\" is not a number")
                         }
+                    }
+                }
+            }
+            
+            Section(header: Text("Send Any Message")) {
+                HStack {
+                    TextField("send-vars", text: $message)
+                        .border(Color.gray, width: 1)
+                    Button("Send") {
+                        client.send(message)
                     }
                 }
             }

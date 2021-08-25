@@ -12,7 +12,6 @@ import Network
 class Client: ObservableObject {
     
     @Published var isConnected = false
-    @Published var host: String?
     
     private var connection: NWConnection?
     

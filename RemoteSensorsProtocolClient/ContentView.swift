@@ -56,7 +56,7 @@ struct ContentView: View {
                     TextField("Message String", text: $broadcast)
                         .border(Color.gray, width: 1)
                     Button("Send") {
-                        client.send("broadcast \"\(broadcast)\"")
+                        client.send(.broadcast(broadcast))
                     }
                 }
             }
@@ -68,7 +68,8 @@ struct ContentView: View {
                     TextField("ABC", text: $stringValue)
                         .border(Color.gray, width: 1)
                     Button("Send") {
-                        client.send("sensor-update \"\(stringName)\" \"\(stringValue)\"")
+                        let v = Variable(name: stringName, value: .string(stringValue))
+                        client.send(.sensorUpdate([v]))
                     }
                 }
             }
@@ -81,8 +82,9 @@ struct ContentView: View {
                         .border(Color.gray, width: 1)
                         .keyboardType(.numberPad)
                     Button("Send") {
-                        if let value = Int(numberValue) {
-                            client.send("sensor-update \"\(numberName)\" \(value)")
+                        if let value = Decimal(string: numberValue) {
+                            let v = Variable(name: numberName, value: .number(value))
+                            client.send(.sensorUpdate([v]))
                         } else {
                             print("\"\(numberValue)\" is not a number")
                         }

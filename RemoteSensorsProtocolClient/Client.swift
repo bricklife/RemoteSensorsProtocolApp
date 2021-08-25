@@ -72,6 +72,10 @@ class Client: ObservableObject {
         })
     }
     
+    func send(_ message: Message) {
+        send(message.stringData)
+    }
+    
     func send(_ s: String) {
         guard isConnected else { return }
         guard let body = s.data(using: .utf8) else { return }

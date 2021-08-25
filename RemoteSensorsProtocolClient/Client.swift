@@ -101,8 +101,8 @@ class Client: ObservableObject {
     func send(_ s: String) {
         guard isConnected else { return }
         guard let body = s.data(using: .utf8) else { return }
-        let len = UInt8(body.count)
-        var data = Data([0, 0, 0, len]) // TODO: Use all 4 bytes
+        let length = UInt32(body.count)
+        var data = withUnsafeBytes(of: length.bigEndian) { Data($0) }
         data.append(body)
         
         connection?.send(content: data, completion: .contentProcessed({ error in
@@ -110,7 +110,7 @@ class Client: ObservableObject {
                 print("Send Error: \(error)")
                 return
             }
-            print("Sent: [\(len)] '\(s)'")
+            print("Sent: '\(s)'")
         }))
     }
 }

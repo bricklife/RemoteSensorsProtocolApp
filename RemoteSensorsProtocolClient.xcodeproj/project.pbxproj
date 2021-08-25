@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB1A62B726D68CC100C6E7FF /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A62B626D68CC100C6E7FF /* Connection.swift */; };
 		CBA3C8ED26D35B6C0072AFD7 /* RemoteSensorsProtocolClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA3C8EC26D35B6C0072AFD7 /* RemoteSensorsProtocolClientApp.swift */; };
 		CBA3C8EF26D35B6C0072AFD7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA3C8EE26D35B6C0072AFD7 /* ContentView.swift */; };
 		CBA3C8F126D35B6D0072AFD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBA3C8F026D35B6D0072AFD7 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB1A62B626D68CC100C6E7FF /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		CBA3C8E926D35B6C0072AFD7 /* RemoteSensorsProtocolClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemoteSensorsProtocolClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBA3C8EC26D35B6C0072AFD7 /* RemoteSensorsProtocolClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSensorsProtocolClientApp.swift; sourceTree = "<group>"; };
 		CBA3C8EE26D35B6C0072AFD7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				CBA3C8EC26D35B6C0072AFD7 /* RemoteSensorsProtocolClientApp.swift */,
 				CBA3C8EE26D35B6C0072AFD7 /* ContentView.swift */,
 				CBA3C8FC26D378560072AFD7 /* Client.swift */,
+				CB1A62B626D68CC100C6E7FF /* Connection.swift */,
 				CBA46A2626D6114300594DF1 /* Message.swift */,
 				CBA3C8F026D35B6D0072AFD7 /* Assets.xcassets */,
 				CBA3C8F526D35B6D0072AFD7 /* Info.plist */,
@@ -148,6 +151,7 @@
 			files = (
 				CBA3C8EF26D35B6C0072AFD7 /* ContentView.swift in Sources */,
 				CBA46A2726D6114300594DF1 /* Message.swift in Sources */,
+				CB1A62B726D68CC100C6E7FF /* Connection.swift in Sources */,
 				CBA3C8ED26D35B6C0072AFD7 /* RemoteSensorsProtocolClientApp.swift in Sources */,
 				CBA3C8FD26D378560072AFD7 /* Client.swift in Sources */,
 			);

@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  RemoteSensorsProtocolClient
+//  Client
 //
 //  Created by Shinichiro Oba on 2021/08/23.
 //
@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @AppStorage("host") private var host = "localhost"
     
     @AppStorage("broadcast") private var broadcast = "message"

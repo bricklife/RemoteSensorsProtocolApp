@@ -1,6 +1,6 @@
 //
 //  Message.swift
-//  RemoteSensorsProtocolClient
+//  Shared
 //
 //  Created by Shinichiro Oba on 2021/08/25.
 //

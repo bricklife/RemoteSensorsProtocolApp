@@ -1,6 +1,6 @@
 //
 //  Connection.swift
-//  RemoteSensorsProtocolClient
+//  Shared
 //
 //  Created by Shinichiro Oba on 2021/08/25.
 //
@@ -10,7 +10,6 @@ import Combine
 import Network
 
 class Connection {
-    
     @Published var isConnected = false
     var receiveHandler: ((String) -> Void)?
     
@@ -45,7 +44,7 @@ class Connection {
             }
         }
         
-        connection.start(queue: DispatchQueue(label: "com.bricklife.RemoteSensorsProtocolClient.Connection"))
+        connection.start(queue: DispatchQueue(label: "com.bricklife.RemoteSensorsProtocolApp.Connection"))
     }
     
     func disconnect() {

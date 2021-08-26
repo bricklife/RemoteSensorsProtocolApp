@@ -1,6 +1,6 @@
 //
 //  Client.swift
-//  RemoteSensorsProtocolClient
+//  Client
 //
 //  Created by Shinichiro Oba on 2021/08/23.
 //
@@ -10,7 +10,6 @@ import Combine
 import Network
 
 class Client: ObservableObject {
-    
     var connection: Connection?
     
     @Published var isConnected = false

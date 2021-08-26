@@ -56,7 +56,11 @@ struct ContentView: View {
                     TextField("Message String", text: $broadcast)
                         .border(Color.gray, width: 1)
                     Button("Send") {
-                        client.send(.broadcast(broadcast))
+                        if !broadcast.isEmpty {
+                            client.send(.broadcast(broadcast))
+                        } else {
+                            print("The message is empty")
+                        }
                     }
                 }
             }
@@ -68,8 +72,12 @@ struct ContentView: View {
                     TextField("ABC", text: $stringValue)
                         .border(Color.gray, width: 1)
                     Button("Send") {
-                        let v = Variable(name: stringName, value: .string(stringValue))
-                        client.send(.sensorUpdate([v]))
+                        if !stringName.isEmpty {
+                            let v = Variable(name: stringName, value: .string(stringValue))
+                            client.send(.sensorUpdate([v]))
+                        } else {
+                            print("The name is empty")
+                        }
                     }
                 }
             }
@@ -94,7 +102,7 @@ struct ContentView: View {
             
             Section(header: Text("Send Any Message")) {
                 HStack {
-                    TextField("send-vars", text: $message)
+                    TextField("e.g. send-vars, peer-name anonymous, etc.", text: $message)
                         .border(Color.gray, width: 1)
                     Button("Send") {
                         client.send(message)

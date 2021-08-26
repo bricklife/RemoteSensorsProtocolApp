@@ -12,6 +12,7 @@ import Network
 class Connection {
     
     @Published var isConnected = false
+    var receiveHandler: ((String) -> Void)?
     
     private let connection: NWConnection
     
@@ -21,7 +22,9 @@ class Connection {
     
     func connect() {
         connection.stateUpdateHandler = { [weak self] (newState) in
-            self?.isConnected = (newState == .ready)
+            DispatchQueue.main.async {
+                self?.isConnected = (newState == .ready)
+            }
             
             switch newState {
             case .ready:
@@ -42,7 +45,7 @@ class Connection {
             }
         }
         
-        connection.start(queue: .main)
+        connection.start(queue: DispatchQueue(label: "com.bricklife.RemoteSensorsProtocolClient.Connection"))
     }
     
     func disconnect() {
@@ -87,7 +90,10 @@ class Connection {
                 return
             }
             
-            print("Received: '\(body)'")
+            DispatchQueue.main.async {
+                self?.receiveHandler?(body)
+            }
+            
             self?.receiveHeader()
         })
     }

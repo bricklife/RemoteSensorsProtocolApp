@@ -20,7 +20,12 @@ class Client: ObservableObject {
         let port = NWEndpoint.Port(integerLiteral: 42001)
         
         let connection = Connection(connection: NWConnection(host: host, port: port, using: .tcp))
+        
         connection.$isConnected.assign(to: &$isConnected)
+        connection.receiveHandler = { message in
+            print("Received: '\(message)'")
+        }
+        
         connection.connect()
         
         self.connection = connection

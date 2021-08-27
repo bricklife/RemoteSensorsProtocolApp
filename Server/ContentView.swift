@@ -8,9 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var server = Server()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Form {
+            Section {
+                HStack {
+                    if server.isConnected {
+                        Text("Started - \(server.ipAddress ?? "")")
+                    } else {
+                        Text("Not started")
+                    }
+                    Spacer()
+                    if server.isConnected {
+                        Button("Stop") {
+                            server.stop()
+                        }
+                    } else {
+                        Button("Start") {
+                            server.start()
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -20,6 +20,7 @@
 		CB1A637F26D75D4200C6E7FF /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A637C26D75D4200C6E7FF /* Message.swift */; };
 		CB1A638026D75D4200C6E7FF /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A637C26D75D4200C6E7FF /* Message.swift */; };
 		CB1A638226D75D4F00C6E7FF /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A638126D75D4F00C6E7FF /* Client.swift */; };
+		CB1A638426D7AB0D00C6E7FF /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A638326D7AB0D00C6E7FF /* Server.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		CB1A637B26D75D4200C6E7FF /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		CB1A637C26D75D4200C6E7FF /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		CB1A638126D75D4F00C6E7FF /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		CB1A638326D7AB0D00C6E7FF /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				CB1A637926D75CDF00C6E7FF /* Server.entitlements */,
 				CB1A636C26D75CD700C6E7FF /* ServerApp.swift */,
 				CB1A636E26D75CD700C6E7FF /* ContentView.swift */,
+				CB1A638326D7AB0D00C6E7FF /* Server.swift */,
 				CB1A637026D75CD800C6E7FF /* Assets.xcassets */,
 				CB1A637526D75CD800C6E7FF /* Info.plist */,
 				CB1A637226D75CD800C6E7FF /* Preview Content */,
@@ -242,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB1A638426D7AB0D00C6E7FF /* Server.swift in Sources */,
 				CB1A636F26D75CD700C6E7FF /* ContentView.swift in Sources */,
 				CB1A638026D75D4200C6E7FF /* Message.swift in Sources */,
 				CB1A637E26D75D4200C6E7FF /* Connection.swift in Sources */,

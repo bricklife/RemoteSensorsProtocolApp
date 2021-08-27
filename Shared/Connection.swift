@@ -10,12 +10,15 @@ import Combine
 import Network
 
 class Connection {
+    let id: UUID
+    
     @Published var isConnected = false
     var receiveHandler: ((String) -> Void)?
     
     private let connection: NWConnection
     
     init(connection: NWConnection) {
+        self.id = UUID()
         self.connection = connection
     }
     
@@ -109,12 +112,13 @@ class Connection {
         var data = withUnsafeBytes(of: length.bigEndian) { Data($0) }
         data.append(body)
         
+        let id = id
         connection.send(content: data, completion: .contentProcessed({ error in
             if let error = error {
-                print("Send Error: \(error)")
+                print(id, "Send Error: \(error)")
                 return
             }
-            print("Sent: '\(string)'")
+            print(id, "Sent: '\(string)'")
         }))
     }
 }

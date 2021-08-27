@@ -13,14 +13,75 @@ class Server: ObservableObject {
     @Published var isConnected = false
     @Published var ipAddress: String?
     
+    private var listener: NWListener?
+    private var connections: [Connection] = []
+    
     func start() {
-        isConnected = true
-        ipAddress = getIpAddresses().first?.value
+        guard let listener = try? NWListener(using: .tcp, on: 42001) else { return }
+        
+        listener.stateUpdateHandler = { [weak self] (newState) in
+            DispatchQueue.main.async {
+                if newState == .ready {
+                    self?.isConnected = true
+                    self?.ipAddress = getIpAddresses().first?.value
+                    self?.connections = []
+                } else {
+                    self?.isConnected = false
+                    self?.ipAddress = nil
+                }
+            }
+            
+            switch newState {
+            case .ready:
+                print(".ready")
+            case .waiting(let error):
+                print(".waiting", error)
+            case .failed(let error):
+                print(".failed", error)
+            case .setup:
+                print(".setup")
+            case .cancelled:
+                print(".cancelled")
+            @unknown default:
+                fatalError()
+            }
+        }
+        
+        listener.newConnectionHandler = { [weak self] (connection: NWConnection) in
+            print(connection.endpoint)
+            print("Connected:", connection, connection.parameters)
+            
+            let c = Connection(connection: connection)
+            let id = c.id
+            c.receiveHandler = { [weak c] message in
+                print(id, "Received: '\(message)'")
+                if message.hasPrefix("peer-name ") {
+                    self?.boardcast(message: Message.sendVars.stringData)
+                } else {
+                    self?.boardcast(message: message, from: c)
+                }
+            }
+            
+            c.connect()
+            
+            self?.connections.append(c)
+        }
+        
+        listener.start(queue: .main)
+        
+        self.listener = listener
     }
     
     func stop() {
-        isConnected = false
-        ipAddress = nil
+        listener?.cancel()
+    }
+    
+    func boardcast(message: String, from: Connection? = nil) {
+        for connection in connections {
+            if connection.id != from?.id {
+                connection.send(string: message)
+            }
+        }
     }
 }
 
